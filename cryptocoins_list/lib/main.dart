@@ -15,6 +15,9 @@ class CryptoCoinApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.blueGrey,
         primarySwatch: Colors.orange,
+        dividerColor: Colors.white,
+        appBarTheme: const AppBarTheme(backgroundColor: Colors.orange),
+        listTileTheme: const ListTileThemeData(iconColor: Colors.white),
         textTheme: TextTheme(
           bodyMedium: const TextStyle(
             color: Colors.white,
@@ -52,20 +55,20 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange,
         title: Text(widget.title),
         leading: Icon(Icons.attach_money_sharp, size: 40),
       ),
 
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: 20,
+        separatorBuilder: (context, index) => Divider(),
         itemBuilder: (context, i) => ListTile(
           leading: SvgPicture.asset(
             'assets/svg/bitcoin_logo.svg',
             height: 50, // smaller height
-            width:  50, // make width and height equal and smaller
+            width: 50, // make width and height equal and smaller
           ),
-          trailing: (Icon(Icons.check, size: 40,color: Colors.amber)),
+          trailing: (Icon(Icons.arrow_forward_ios, size: 25)),
           title: Text('KZT', style: Theme.of(context).textTheme.bodyMedium),
           subtitle: Text(
             '5000/USD',
@@ -73,7 +76,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-
     );
   }
 }
