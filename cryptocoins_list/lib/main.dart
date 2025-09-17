@@ -11,22 +11,50 @@ class CryptoCoinApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'CryptoCoinApp',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.blueGrey,
+
+        // Основная цветовая палитра
         primarySwatch: Colors.orange,
-        dividerColor: Colors.white,
-        appBarTheme: const AppBarTheme(backgroundColor: Colors.orange),
-        listTileTheme: const ListTileThemeData(iconColor: Colors.white),
-        textTheme: TextTheme(
-          bodyMedium: const TextStyle(
+        dividerTheme: const DividerThemeData(color: Colors.white),
+
+        // AppBar стили
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.orange,
+          titleTextStyle: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w700,
-            fontSize: 22,
+            fontSize: 25,
           ),
-
-          labelSmall: const TextStyle(color: Colors.white, fontSize: 17),
+          iconTheme: IconThemeData(color: Colors.white, size: 30),
         ),
+
+        // Стили для ListTile
+        listTileTheme: const ListTileThemeData(
+          iconColor: Colors.white,
+          textColor: Colors.white,
+        ),
+
+        // Тексты
+        textTheme: const TextTheme(
+          headlineLarge: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+          bodyMedium: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+          ),
+          labelSmall: TextStyle(
+            color: Colors.white,
+            fontSize: 15,
+          ),
+        ),
+
+        // Иконки
+        iconTheme: const IconThemeData(color: Colors.white, size: 25),
       ),
       home: const MyHomePage(title: 'CryptoCoinApp'),
     );
@@ -53,27 +81,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context); // <-- удобно держать ссылку
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        leading: Icon(Icons.attach_money_sharp, size: 40),
+        leading: Icon(Icons.attach_money_sharp, size: theme.iconTheme.size),
       ),
-
       body: ListView.separated(
         itemCount: 20,
-        separatorBuilder: (context, index) => Divider(),
+        separatorBuilder: (context, index) => const Divider(),
         itemBuilder: (context, i) => ListTile(
           leading: SvgPicture.asset(
             'assets/svg/bitcoin_logo.svg',
-            height: 50, // smaller height
-            width: 50, // make width and height equal and smaller
+            height: 40,
+            width: 40,
           ),
-          trailing: (Icon(Icons.arrow_forward_ios, size: 25)),
-          title: Text('KZT', style: Theme.of(context).textTheme.bodyMedium),
-          subtitle: Text(
-            '5000/USD',
-            style: Theme.of(context).textTheme.labelSmall,
-          ),
+          trailing: Icon(Icons.arrow_forward_ios, size: theme.iconTheme.size),
+          title: Text('KZT', style: theme.textTheme.headlineLarge),
+          subtitle: Text('5000/USD', style: theme.textTheme.labelSmall),
         ),
       ),
     );
