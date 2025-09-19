@@ -43,42 +43,32 @@ class CryptoCoinApp extends StatelessWidget {
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
-          bodyMedium: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-          ),
-          labelSmall: TextStyle(
-            color: Colors.white,
-            fontSize: 15,
-          ),
+          bodyMedium: TextStyle(color: Colors.white, fontSize: 20),
+          labelSmall: TextStyle(color: Colors.white, fontSize: 15),
         ),
 
         // Иконки
         iconTheme: const IconThemeData(color: Colors.white, size: 25),
       ),
-      home: const MyHomePage(title: 'CryptoCoinApp'),
+      routes:{
+        '/': (context) =>  CryptoListApp(title: 'CryptoCoinApp'),
+        '/coin': (context) => CryptoCoinScreen(),
+      },
+      //home: const CryptoListApp(title: 'CryptoCoinApp'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class CryptoListApp extends StatefulWidget {
+  const CryptoListApp({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<CryptoListApp> createState() => _CryptoListAppState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
+class _CryptoListAppState extends State<CryptoListApp> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context); // <-- удобно держать ссылку
@@ -96,11 +86,24 @@ class _MyHomePageState extends State<MyHomePage> {
             height: 40,
             width: 40,
           ),
-          trailing: Icon(Icons.arrow_forward_ios, size: theme.iconTheme.size),
           title: Text('KZT', style: theme.textTheme.headlineLarge),
           subtitle: Text('5000/USD', style: theme.textTheme.labelSmall),
+          trailing: Icon(Icons.arrow_forward_ios, size: theme.iconTheme.size),
+          onTap: () {
+            Navigator.of(context).pushNamed('/coin');
+          },
         ),
       ),
     );
+  }
+}
+
+class CryptoCoinScreen extends StatelessWidget {
+  const CryptoCoinScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(appBar: AppBar(title: Text('KZT')));
+    body: Center(child: Text('Details here'));
   }
 }
