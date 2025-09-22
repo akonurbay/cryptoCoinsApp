@@ -1,5 +1,8 @@
+import 'dart:math' hide log;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'dart:developer';
 
 void main() {
   runApp(const CryptoCoinApp());
@@ -50,8 +53,8 @@ class CryptoCoinApp extends StatelessWidget {
         // Иконки
         iconTheme: const IconThemeData(color: Colors.white, size: 25),
       ),
-      routes:{
-        '/': (context) =>  CryptoListApp(title: 'CryptoCoinApp'),
+      routes: {
+        '/': (context) => CryptoListApp(title: 'CryptoCoinApp'),
         '/coin': (context) => CryptoCoinScreen(),
       },
       //home: const CryptoListApp(title: 'CryptoCoinApp'),
@@ -80,30 +83,58 @@ class _CryptoListAppState extends State<CryptoListApp> {
       body: ListView.separated(
         itemCount: 20,
         separatorBuilder: (context, index) => const Divider(),
-        itemBuilder: (context, i) => ListTile(
-          leading: SvgPicture.asset(
-            'assets/svg/bitcoin_logo.svg',
-            height: 40,
-            width: 40,
-          ),
-          title: Text('KZT', style: theme.textTheme.headlineLarge),
-          subtitle: Text('5000/USD', style: theme.textTheme.labelSmall),
-          trailing: Icon(Icons.arrow_forward_ios, size: theme.iconTheme.size),
-          onTap: () {
-            Navigator.of(context).pushNamed('/coin');
-          },
-        ),
+        itemBuilder: (context, i) {
+          const coinname = 'project';
+          return ListTile(
+            leading: SvgPicture.asset(
+              'assets/svg/bitcoin_logo.svg',
+              height: 40,
+              width: 40,
+            ),
+            title: Text(coinname, style: theme.textTheme.headlineLarge),
+            subtitle: Text('5000/USD', style: theme.textTheme.labelSmall),
+            trailing: Icon(Icons.arrow_forward_ios, size: theme.iconTheme.size),
+            onTap: () {
+              Navigator.of(
+                context,
+              ).pushNamed('/coin', arguments: coinname);
+            },
+          );
+        },
       ),
     );
   }
 }
 
-class CryptoCoinScreen extends StatelessWidget {
+class CryptoCoinScreen extends StatefulWidget {
   const CryptoCoinScreen({super.key});
 
   @override
+  State<CryptoCoinScreen> createState() => _CryptoCoinScreenState();
+}
+
+class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
+  String? coinname;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    final args = ModalRoute.of(context)?.settings.arguments;
+    if (args == null) {
+      log('you must provide args!!!');
+      return;
+    }
+    if (args is! String) {
+      log('you must provide String args!!!');
+      return;
+    }
+    coinname = args;
+    setState(() {});
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text('KZT')));
-    body: Center(child: Text('Details here'));
+    return Scaffold(appBar: AppBar(title: Text(coinname ?? '...')));
   }
 }
