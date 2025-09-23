@@ -33,7 +33,7 @@ class _CryptoListAppState extends State<CryptoListApp> {
                 final coinName = coin.name;
                 return  CryptoCoinTile(coinName: coinName);
               },
-            ),
+            ),// check
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
         child: const Icon(Icons.download, color: Colors.black, size: 40),
