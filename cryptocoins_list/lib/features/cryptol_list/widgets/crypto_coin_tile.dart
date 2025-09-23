@@ -4,10 +4,10 @@ import 'package:flutter_svg/svg.dart';
 class CryptoCoinTile extends StatelessWidget {
   const CryptoCoinTile({
     super.key,
-    required this.coinname,
+    required this.coinName,
   });
 
-  final String coinname;
+  final String coinName;
  
   @override
   Widget build(BuildContext context) {
@@ -18,13 +18,13 @@ class CryptoCoinTile extends StatelessWidget {
         height: 40,
         width: 40,
       ),
-      title: Text(coinname, style: theme.textTheme.headlineLarge),
+      title: Text(coinName, style: theme.textTheme.headlineLarge),
       subtitle: Text('5000/USD', style: theme.textTheme.labelSmall),
       trailing: Icon(Icons.arrow_forward_ios, size: theme.iconTheme.size),
       onTap: () {
         Navigator.of(
           context,
-        ).pushNamed('/coin', arguments: coinname);
+        ).pushNamed('/coin', arguments: coinName);
       },
     );
   }
