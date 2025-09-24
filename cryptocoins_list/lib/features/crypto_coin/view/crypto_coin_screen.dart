@@ -18,7 +18,7 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
     assert(args != null && args is String, 'you must provide string args');
 
     coinname = args as String;
-    // setState(() {});
+    // setState(() {});e
     super.didChangeDependencies();
   }
 
