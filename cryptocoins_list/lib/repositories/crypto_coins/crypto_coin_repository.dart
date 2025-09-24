@@ -1,7 +1,15 @@
 import 'package:cryptocoins_list/repositories/crypto_coins/models/crypto_coin.dart';
 import 'package:dio/dio.dart';
+import 'package:cryptocoins_list/repositories/crypto_coins/abstract_coins_repository.dart';
 
-class CryptoCoinRepository {
+
+class CryptoCoinRepository implements AbstractCoinsRepository {
+  CryptoCoinRepository({required this.dio});
+  final Dio dio;
+
+  
+
+  @override
   Future<List<CryptoCoin>> getCoinsList() async {
     final response = await Dio().get(
       'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,BNB,AID,AGVC,AERGO,BRD,BRAD,BSTN,AGI&tsyms=USD',
@@ -17,9 +25,9 @@ class CryptoCoinRepository {
       final imageUrl = usdData['IMAGEURL'];
       return CryptoCoin(
         name: e.key,
-       priceInUSD: price,
+        priceInUSD: price,
         imageUrl: 'https://www.cryptocompare.com/$imageUrl',
-        );
+      );
     }).toList();
     return cryptoCoinsList;
   }

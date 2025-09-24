@@ -1,7 +1,7 @@
 import 'package:cryptocoins_list/features/cryptol_list/widgets/widgets.dart';
-import 'package:cryptocoins_list/repositories/crypto_coins/crypto_coin_repository.dart';
-import 'package:cryptocoins_list/repositories/crypto_coins/models/crypto_coin.dart';
+import 'package:cryptocoins_list/repositories/crypto_coins/crypto_coins.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class CryptoListApp extends StatefulWidget {
   const CryptoListApp({super.key, required this.title});
@@ -51,5 +51,5 @@ class _CryptoListAppState extends State<CryptoListApp> {
   }
 
   Future<List<CryptoCoin>> _loadCryptoCoins() async =>
-      _cryptoCoinsList = await CryptoCoinRepository().getCoinsList();
+      _cryptoCoinsList = await GetIt.I<AbstractCoinsRepository>().getCoinsList();
 }
