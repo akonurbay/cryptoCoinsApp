@@ -1,6 +1,8 @@
+import 'package:cryptocoins_list/features/cryptol_list/bloc/crypto_list_bloc.dart';
 import 'package:cryptocoins_list/features/cryptol_list/widgets/widgets.dart';
 import 'package:cryptocoins_list/repositories/crypto_coins/crypto_coins.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 class CryptoListApp extends StatefulWidget {
@@ -13,42 +15,46 @@ class CryptoListApp extends StatefulWidget {
 }
 
 class _CryptoListAppState extends State<CryptoListApp> {
-  List<CryptoCoin>? _cryptoCoinsList;
+  
+  final _cryptoListBloc = CryptoListBloc(GetIt.I<AbstractCoinsRepository>());
 
   @override
-  void initState(){
-    _loadCryptoCoins();
+  void initState() {
+    _cryptoListBloc.add(LoadCryptoList());
     super.initState();
   }
 
-  
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context); // <-- удобно держать ссылку
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: (_cryptoCoinsList == null)
-            ? const CircularProgressIndicator(
-                color: Colors.black,
-                strokeWidth: 4,
-              )
-            : ListView.separated(
-                padding: const EdgeInsets.only(top: 16),
-                itemCount: _cryptoCoinsList!.length,
-                separatorBuilder: (context, index) => const Divider(),
-                itemBuilder: (context, i) {
-                  final coin = _cryptoCoinsList![i];
-                  return CryptoCoinTile(coin: coin);
-                },
-              ),
-      ), // check
-      
+      appBar: AppBar(title: Text(widget.title)),
+
+      body:
+          BlocBuilder <CryptoListBloc, CryptoListState>(
+            bloc: _cryptoListBloc,
+            builder: (context, state) {
+
+              if (state is CryptoListLoaded){
+ return ListView.separated(
+              padding: const EdgeInsets.only(top: 16),
+              itemCount: state.coinsList.length,
+              separatorBuilder: (context, index) => const Divider(),
+              itemBuilder: (context, i) {
+                final coin = state.coinsList[i];
+                return CryptoCoinTile(coin: coin);
+              },
+            );
+              }
+              return const Center (child: CircularProgressIndicator());
+            },
+    )
+          
+          // (_cryptoCoinsList == null)
+          // ? const CircularProgressIndicator(color: Colors.black, strokeWidth: 4)
+         
+
+      // check
     );
   }
-
-  Future<List<CryptoCoin>> _loadCryptoCoins() async =>
-      _cryptoCoinsList = await GetIt.I<AbstractCoinsRepository>().getCoinsList();
 }
