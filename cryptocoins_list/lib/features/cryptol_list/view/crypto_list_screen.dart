@@ -26,14 +26,14 @@ class _CryptoListAppState extends State<CryptoListApp> {
       body: (_cryptoCoinsList == null)
           ? const SizedBox()
           : ListView.separated(
+            padding: const EdgeInsets.only(top: 16),
               itemCount: _cryptoCoinsList!.length,
               separatorBuilder: (context, index) => const Divider(),
               itemBuilder: (context, i) {
                 final coin = _cryptoCoinsList![i];
-                final coinName = coin.name;
-                return  CryptoCoinTile(coinName: coinName);
+                return CryptoCoinTile(coin: coin);
               },
-            ),// check
+            ), // check
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
         child: const Icon(Icons.download, color: Colors.black, size: 40),

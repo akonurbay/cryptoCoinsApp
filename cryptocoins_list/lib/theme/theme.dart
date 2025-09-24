@@ -16,6 +16,7 @@ final darkTheme = ThemeData(
             fontSize: 25,
           ),
           iconTheme: IconThemeData(color: Colors.white, size: 30),
+          elevation: 0,
         ),
 
         // Стили для ListTile
