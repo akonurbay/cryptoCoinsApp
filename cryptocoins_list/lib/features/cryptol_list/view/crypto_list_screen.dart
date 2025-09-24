@@ -28,7 +28,6 @@ class _CryptoListAppState extends State<CryptoListApp> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        leading: Icon(Icons.attach_money_sharp, size: theme.iconTheme.size),
       ),
       body: Center(
         child: (_cryptoCoinsList == null)
