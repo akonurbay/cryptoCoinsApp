@@ -16,6 +16,13 @@ class _CryptoListAppState extends State<CryptoListApp> {
   List<CryptoCoin>? _cryptoCoinsList;
 
   @override
+  void initState(){
+    _loadCryptoCoins();
+    super.initState();
+  }
+
+  
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context); // <-- удобно держать ссылку
     return Scaffold(
@@ -23,26 +30,26 @@ class _CryptoListAppState extends State<CryptoListApp> {
         title: Text(widget.title),
         leading: Icon(Icons.attach_money_sharp, size: theme.iconTheme.size),
       ),
-      body: (_cryptoCoinsList == null)
-          ? const SizedBox()
-          : ListView.separated(
-            padding: const EdgeInsets.only(top: 16),
-              itemCount: _cryptoCoinsList!.length,
-              separatorBuilder: (context, index) => const Divider(),
-              itemBuilder: (context, i) {
-                final coin = _cryptoCoinsList![i];
-                return CryptoCoinTile(coin: coin);
-              },
-            ), // check
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.orange,
-        child: const Icon(Icons.download, color: Colors.black, size: 40),
-
-        onPressed: () async {
-          _cryptoCoinsList = await CryptoCoinRepository().getCoinsList();
-          setState(() {});
-        },
-      ),
+      body: Center(
+        child: (_cryptoCoinsList == null)
+            ? const CircularProgressIndicator(
+                color: Colors.black,
+                strokeWidth: 4,
+              )
+            : ListView.separated(
+                padding: const EdgeInsets.only(top: 16),
+                itemCount: _cryptoCoinsList!.length,
+                separatorBuilder: (context, index) => const Divider(),
+                itemBuilder: (context, i) {
+                  final coin = _cryptoCoinsList![i];
+                  return CryptoCoinTile(coin: coin);
+                },
+              ),
+      ), // check
+      
     );
   }
+
+  Future<List<CryptoCoin>> _loadCryptoCoins() async =>
+      _cryptoCoinsList = await CryptoCoinRepository().getCoinsList();
 }
