@@ -15,7 +15,7 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
     // TODO: implement didChangeDependencies
     final args = ModalRoute.of(context)?.settings.arguments;
 
-    assert(args != null && args is String, 'you must provide string args');
+  assert(args != null && args is String, 'you must provide string args');
 
     coinname = args as String;
     // setState(() {});e
@@ -27,3 +27,6 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
     return Scaffold(appBar: AppBar(title: Text(coinname ?? '...')));
   }
 }
+
+
+//test check push
