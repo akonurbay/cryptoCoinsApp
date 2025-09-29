@@ -81,11 +81,6 @@ class _CryptoListAppState extends State<CryptoListApp> {
           },
         ),
       ),
-
-      // (_cryptoCoinsList == null)
-      // ? const CircularProgressIndicator(color: Colors.black, strokeWidth: 4)
-
-      // check
     );
   }
 }
