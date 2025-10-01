@@ -5,5 +5,5 @@ import 'package:cryptocoins_list/features/cryptol_list/view/crypto_list_screen.d
 
 final routes = {
   '/': (context) => CryptoListApp(title: 'CryptoCoinApp'),
-  '/coin': (context) => const CryptoCoinScreen(),
+  '/coin': (context) => const CryptoCoinScreen(''),
 };
